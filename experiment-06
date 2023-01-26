@@ -1,0 +1,90 @@
+mysql> use university;
+Database changed
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| regno  | int(3)      | YES  |     | NULL    |       |
+| name   | varchar(15) | YES  |     | NULL    |       |
+| gender | varchar(1)  | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| city   | varchar(15) | YES  |     | NULL    |       |
+| age    | int(18)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> select * from student where regno between 335 and 195;
+Empty set (0.00 sec)
+
+mysql> select * from student where regno between 193 an 195;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'an 195' at line 1
+mysql> select * from student where regno between 335 and 193;
+Empty set (0.00 sec)
+
+mysql> select * from student where regno between 195 and 193;
+Empty set (0.00 sec)
+
+mysql> select * from student where regno between 193 and 335;
++-------+-------+--------+------------+-----------+------+
+| regno | name  | gender | dob        | city      | age  |
++-------+-------+--------+------------+-----------+------+
+|   193 | navya | f      | 2005-10-07 | gudivaada |   17 |
+|   195 | vamsi | m      | 2003-10-31 | macharla  |   19 |
++-------+-------+--------+------------+-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from markss where marks between 90 and 97;
++-------+-------+-------+
+| regno | name  | marks |
++-------+-------+-------+
+|   335 | navya |    90 |
+|   195 | vamsi |    97 |
++-------+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select count(name) from student;
++-------------+
+| count(name) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(name),regno from student
+    -> group by rgno having count(name)>0;
+ERROR 1054 (42S22): Unknown column 'rgno' in 'group statement'
+mysql> select count(name),regno from student
+    -> group by regno having count(name)>0;
++-------------+-------+
+| count(name) | regno |
++-------------+-------+
+|           1 |   193 |
+|           1 |   195 |
++-------------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select avg(marks) from markss
+    -> ;
++------------+
+| avg(marks) |
++------------+
+|    95.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(marks) from markss
+    -> ;
++------------+
+| sum(marks) |
++------------+
+|        285 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where gender in ('m');
++-------+-------+--------+------------+----------+------+
+| regno | name  | gender | dob        | city     | age  |
++-------+-------+--------+------------+----------+------+
+|   195 | vamsi | m      | 2003-10-31 | macharla |   19 |
++-------+-------+--------+------------+----------+------+
+1 row in set (0.00 sec)
