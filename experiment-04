@@ -1,0 +1,54 @@
+mysql> use university;
+Database changed
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| regno  | int(3)      | YES  |     | NULL    |       |
+| name   | varchar(15) | YES  |     | NULL    |       |
+| gender | varchar(1)  | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| city   | varchar(15) | YES  |     | NULL    |       |
+| age    | int(18)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+6 rows in set (0.01 sec)
+
+mysql> select * from student;
++-------+--------+--------+------------+------------+------+
+| regno | name   | gender | dob        | city       | age  |
++-------+--------+--------+------------+------------+------+
+|   191 | fouzia | f      | 2004-10-19 | ananthapur |   18 |
+|   192 | meghu  | f      | 2004-05-06 | rayachoti  |   19 |
+|   193 | navya  | f      | 2005-10-07 | gudivaada  |   17 |
+|   194 | fouzia | m      | 2004-07-21 | ongole     |   18 |
+|   195 | vamsi  | m      | 2003-10-31 | macharla   |   19 |
++-------+--------+--------+------------+------------+------+
+5 rows in set (0.00 sec)
+
+mysql> update student set name='meghu' where age='18';
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from student;
++-------+-------+--------+------------+------------+------+
+| regno | name  | gender | dob        | city       | age  |
++-------+-------+--------+------------+------------+------+
+|   191 | meghu | f      | 2004-10-19 | ananthapur |   18 |
+|   192 | meghu | f      | 2004-05-06 | rayachoti  |   19 |
+|   193 | navya | f      | 2005-10-07 | gudivaada  |   17 |
+|   194 | meghu | m      | 2004-07-21 | ongole     |   18 |
+|   195 | vamsi | m      | 2003-10-31 | macharla   |   19 |
++-------+-------+--------+------------+------------+------+
+5 rows in set (0.00 sec)
+
+mysql> delete from student where name='meghu';
+Query OK, 3 rows affected (0.00 sec)
+
+mysql> select * from student;
++-------+-------+--------+------------+-----------+------+
+| regno | name  | gender | dob        | city      | age  |
++-------+-------+--------+------------+-----------+------+
+|   193 | navya | f      | 2005-10-07 | gudivaada |   17 |
+|   195 | vamsi | m      | 2003-10-31 | macharla  |   19 |
++-------+-------+--------+------------+-----------+------+
+2 rows in set (0.00 sec)
