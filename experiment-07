@@ -1,0 +1,80 @@
+mysql> use university;
+Database changed
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| regno  | int(3)      | YES  |     | NULL    |       |
+| name   | varchar(15) | YES  |     | NULL    |       |
+| gender | varchar(1)  | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| city   | varchar(15) | YES  |     | NULL    |       |
+| age    | int(18)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> select name,gender,dob from student order by regno;
++-------+--------+------------+
+| name  | gender | dob        |
++-------+--------+------------+
+| navya | f      | 2005-10-07 |
+| vamsi | m      | 2003-10-31 |
++-------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select name,gender,dob from student order by name;
++-------+--------+------------+
+| name  | gender | dob        |
++-------+--------+------------+
+| navya | f      | 2005-10-07 |
+| vamsi | m      | 2003-10-31 |
++-------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from markss;
++-------+-------+-------+
+| regno | name  | marks |
++-------+-------+-------+
+|   335 | navya |    90 |
+|   193 | navya |    98 |
+|   195 | vamsi |    97 |
++-------+-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select name, marks from markss order by marks;
++-------+-------+
+| name  | marks |
++-------+-------+
+| navya |    90 |
+| vamsi |    97 |
+| navya |    98 |
++-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select name,marks from markss order by marks desc;
++-------+-------+
+| name  | marks |
++-------+-------+
+| navya |    98 |
+| vamsi |    97 |
+| navya |    90 |
++-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select count(name) from student;
++-------------+
+| count(name) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(name),regno from student
+    -> group by regno having count(name)>0;
++-------------+-------+
+| count(name) | regno |
++-------------+-------+
+|           1 |   193 |
+|           1 |   195 |
++-------------+-------+
+2 rows in set (0.00 sec)
