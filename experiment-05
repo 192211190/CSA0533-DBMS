@@ -1,0 +1,237 @@
+mysql> use university;
+Database changed
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| regno  | int(3)      | YES  |     | NULL    |       |
+| name   | varchar(15) | YES  |     | NULL    |       |
+| gender | varchar(1)  | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| city   | varchar(15) | YES  |     | NULL    |       |
+| age    | int(18)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> select * from student;
++-------+-------+--------+------------+-----------+------+
+| regno | name  | gender | dob        | city      | age  |
++-------+-------+--------+------------+-----------+------+
+|   193 | navya | f      | 2005-10-07 | gudivaada |   17 |
+|   195 | vamsi | m      | 2003-10-31 | macharla  |   19 |
++-------+-------+--------+------------+-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where regno=193;
++-------+-------+--------+------------+-----------+------+
+| regno | name  | gender | dob        | city      | age  |
++-------+-------+--------+------------+-----------+------+
+|   193 | navya | f      | 2005-10-07 | gudivaada |   17 |
++-------+-------+--------+------------+-----------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where regno between 193 and 195;
++-------+-------+--------+------------+-----------+------+
+| regno | name  | gender | dob        | city      | age  |
++-------+-------+--------+------------+-----------+------+
+|   193 | navya | f      | 2005-10-07 | gudivaada |   17 |
+|   195 | vamsi | m      | 2003-10-31 | macharla  |   19 |
++-------+-------+--------+------------+-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> create table marks(regno int(6),name varchar(10),marks int(3));
+ERROR 1050 (42S01): Table 'marks' already exists
+mysql> create table markss(regno int(6),name varchar(10),marks int(3));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc markss;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| regno | int(6)      | YES  |     | NULL    |       |
+| name  | varchar(10) | YES  |     | NULL    |       |
+| marks | int(3)      | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.02 sec)
+
+mysql> insert into markss values('335','navya','90');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into markss values('193','navya','98');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into markss values('195','vamsi','97');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from markss;
++-------+-------+-------+
+| regno | name  | marks |
++-------+-------+-------+
+|   335 | navya |    90 |
+|   193 | navya |    98 |
+|   195 | vamsi |    97 |
++-------+-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(marks) from markss;
++------------+
+| avg(marks) |
++------------+
+|    95.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select max(marks) from markss;
++------------+
+| max(marks) |
++------------+
+|         98 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select min(marks) from markss;
++------------+
+| min(marks) |
++------------+
+|         90 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(marks) from markss;
++------------+
+| sum(marks) |
++------------+
+|        285 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where name LIKE '%AA';
+Empty set (0.00 sec)
+
+mysql> select * from student where name LIKE '%NI';
+Empty set (0.00 sec)
+
+mysql> select * from student where name LIKE '%NA';
+Empty set (0.00 sec)
+
+mysql> select * from student where name LIKE '%CH';
+Empty set (0.00 sec)
+
+mysql> select * from student where name LIKE '%ch';
+Empty set (0.00 sec)
+
+mysql> select * from sudent where regno between 335 and 195;
+ERROR 1146 (42S02): Table 'university.sudent' doesn't exist
+mysql> select * from student where regno between 335 and 195;
+Empty set (0.00 sec)
+
+mysql> select * from markss where marks between 90 and 97;
++-------+-------+-------+
+| regno | name  | marks |
++-------+-------+-------+
+|   335 | navya |    90 |
+|   195 | vamsi |    97 |
++-------+-------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select count(name) from student;
++-------------+
+| count(name) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(name),regno from student
+    -> group by regno having count(name)>0;
++-------------+-------+
+| count(name) | regno |
++-------------+-------+
+|           1 |   193 |
+|           1 |   195 |
++-------------+-------+
+2 rows in set (0.01 sec)
+
+mysql> select avg(marks) from markss
+    -> ;
++------------+
+| avg(marks) |
++------------+
+|    95.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(marks) from markss
+    -> ;
++------------+
+| sum(marks) |
++------------+
+|        285 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select name,gender,dob from student order by regno;
++-------+--------+------------+
+| name  | gender | dob        |
++-------+--------+------------+
+| navya | f      | 2005-10-07 |
+| vamsi | m      | 2003-10-31 |
++-------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select name,gender,dob from student order by name;
++-------+--------+------------+
+| name  | gender | dob        |
++-------+--------+------------+
+| navya | f      | 2005-10-07 |
+| vamsi | m      | 2003-10-31 |
++-------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from markss;
++-------+-------+-------+
+| regno | name  | marks |
++-------+-------+-------+
+|   335 | navya |    90 |
+|   193 | navya |    98 |
+|   195 | vamsi |    97 |
++-------+-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select name,marks from markss order by marks;
++-------+-------+
+| name  | marks |
++-------+-------+
+| navya |    90 |
+| vamsi |    97 |
+| navya |    98 |
++-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select name,marks from markss order by marks desc;
++-------+-------+
+| name  | marks |
++-------+-------+
+| navya |    98 |
+| vamsi |    97 |
+| navya |    90 |
++-------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select count(name) from student;
++-------------+
+| count(name) |
++-------------+
+|           2 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(name),regno from student
+    -> group by regno having count(name)>0;
++-------------+-------+
+| count(name) | regno |
++-------------+-------+
+|           1 |   193 |
+|           1 |   195 |
++-------------+-------+
+2 rows in set (0.00 sec)
