@@ -1,0 +1,112 @@
+mysql> use university;
+Database changed
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| regno  | int(3)      | NO   | PRI | 0       |       |
+| name   | varchar(15) | YES  |     | NULL    |       |
+| gender | varchar(1)  | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| city   | varchar(15) | YES  |     | NULL    |       |
+| age    | int(18)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> select * from student;
++-------+-------+--------+------------+-----------+------+
+| regno | name  | gender | dob        | city      | age  |
++-------+-------+--------+------------+-----------+------+
+|   193 | navya | f      | 2005-10-07 | gudivaada |   17 |
+|   195 | vamsi | m      | 2003-10-31 | macharla  |   19 |
++-------+-------+--------+------------+-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> alter table student
+    -> add check(gender= 'm' or 'f');
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table faculty
+    -> add check (gender='f');
+ERROR 1146 (42S02): Table 'university.faculty' doesn't exist
+mysql> alter table student
+    -> add check (gender='f');
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++-------+-------+--------+------------+-----------+------+
+| regno | name  | gender | dob        | city      | age  |
++-------+-------+--------+------------+-----------+------+
+|   193 | navya | f      | 2005-10-07 | gudivaada |   17 |
+|   195 | vamsi | m      | 2003-10-31 | macharla  |   19 |
++-------+-------+--------+------------+-----------+------+
+2 rows in set (0.00 sec)
+
+mysql> desc student;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| regno  | int(3)      | NO   | PRI | 0       |       |
+| name   | varchar(15) | YES  |     | NULL    |       |
+| gender | varchar(1)  | YES  |     | NULL    |       |
+| dob    | date        | YES  |     | NULL    |       |
+| city   | varchar(15) | YES  |     | NULL    |       |
+| age    | int(18)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> create table subjects(regno int(3),name varchar(15),gender varchar(1),dob date,salary int(6),subject varchar(15));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc subjects;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| regno   | int(3)      | YES  |     | NULL    |       |
+| name    | varchar(15) | YES  |     | NULL    |       |
+| gender  | varchar(1)  | YES  |     | NULL    |       |
+| dob     | date        | YES  |     | NULL    |       |
+| salary  | int(6)      | YES  |     | NULL    |       |
+| subject | varchar(15) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> alter table subjects add foreign key(regno) references student(regno);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc subjects;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| regno   | int(3)      | YES  | MUL | NULL    |       |
+| name    | varchar(15) | YES  |     | NULL    |       |
+| gender  | varchar(1)  | YES  |     | NULL    |       |
+| dob     | date        | YES  |     | NULL    |       |
+| salary  | int(6)      | YES  |     | NULL    |       |
+| subject | varchar(15) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> alter table subjects add unique(salary);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc students;
+ERROR 1146 (42S02): Table 'university.students' doesn't exist
+mysql> desc subjects;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| regno   | int(3)      | YES  | MUL | NULL    |       |
+| name    | varchar(15) | YES  |     | NULL    |       |
+| gender  | varchar(1)  | YES  |     | NULL    |       |
+| dob     | date        | YES  |     | NULL    |       |
+| salary  | int(6)      | YES  | UNI | NULL    |       |
+| subject | varchar(15) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql>
