@@ -1,0 +1,38 @@
+mysql> create database mates;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> use mates;
+Database changed
+mysql> DELIMITER //
+mysql>
+mysql> CREATE FUNCTION Incomelevel ( monthly_value INT )
+    -> RETURNS varchar(20)
+    ->
+    -> BEGIN
+    ->
+    -> DECLARE income_level varchar(20);
+    ->
+    -> CASE monthly_value
+    ->           WHEN 4000 THEN
+    ->                   SET income_level='low income';
+    ->           WHEN 5000 THEN
+    ->                   SET income_level='avg income';
+    ->           ELSE
+    ->                   SET income_level='high income';
+    -> END CASE;
+    -> RETURN income_level;
+    ->
+    -> END; //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> SELECT INCOME LEVEL(5300); //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(5300)' at line 1
+mysql> SELECT INCOMELEVEL(5300); //
++-------------------+
+| INCOMELEVEL(5300) |
++-------------------+
+| high income       |
++-------------------+
+1 row in set (0.01 sec)
+
+mysql>
